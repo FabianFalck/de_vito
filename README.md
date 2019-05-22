@@ -6,7 +6,7 @@ DE VITO: A Dual-arm, High Degree-of-freedom, Lightweight, Inexpensive, Passive U
 This repository contains the joint and Cartesian space kinematic control algorithms for DE VITO, a seven degree-of-freedom, dual-arm upper-limb exoskeleton that passively measures the pose of a human arm. DE VITO is a lightweight, simplistic and energy-efficient design with a total material cost of at least an order of magnitude less than previous work. Furthermore, we provide the a paper discussing the technical implementation, the CAD models and supplementary videos of DE VITO at http://www.imperial.ac.uk/robot-intelligence/robots/de_vito/ and below:
 
 * Paper: TODO
-* CAD models for 3D printing and laser cutting: https://drive.google.com/open?id=1BpmI3DLC9pfB2qu1H0x3XeXltqMBz4HW
+* CAD models for 3D printing and laser cutting: TODO Google drive
 * Videos: TODO
 
 ![CAD model](Images/DE_VITO_lowqual.jpg)
@@ -87,7 +87,7 @@ Simulation only: If you chose to run DE NIRO in simulation, you require one addi
 ![Gazebo simulation](Images/gazebo_sim_2.png)
 
 All initialization work is done now and we are good to go for starting the teleoperation node! For all following screenshots, we assume that you are currently running DE VITO in simulation. Start reading the sensor data from the exoskeleton by running `rosrun exoskeleton exoskeleton_reader`.
-`
+
 ![Exoskeleton reader kickoff](Images/exoskeleton_reader_kickoff.png)
 
 Finally, start publishing the sensor readings by executing `rosrun exoskeleton teleoperation_baxter.py`.
