@@ -1,14 +1,19 @@
-/*The Code is a part of the research 
-"DE VITO: A Dual-arm, High Degree-of-freedom,
-Lightweight, Inexpensive, Passive Upper-limb
+/*
+This code is part of the research project
+"DE VITO: A Dual-arm, High Degree-of-freedom, Lightweight, Inexpensive, Passive Upper-limb Exoskeleton for Robot Teleoperation"
+This code was written, edited and documented by:
+- Kawin Larppichet (Imperial College London, Robot Intelligence Lab)
+- Fabian Falck (Imperial College London, Robot Intelligence Lab)
+For correspondence on this project, please open an Issue on Github.
+Further details can be found at http://www.imperial.ac.uk/robot-intelligence/robots/de_vito/.
 
--This code is designed to maximize the reading speed of the exoskeleton. It can read up to 600Hz.
--The data is composed of 14 angles from potentiometers, 2 analog stick+ 4 buttons Nintendo Nunchuks, 1 IMU.
--All the information are packed into the package of 23 bytes while every bits in these bytes represente information.
--This method can significantly increase the reading speed from 60Hz to 600Hz
 
-Please contact KawinLarppichet@gmail.com for further information.
-*/ 
+General remarks on this script:
+-This code is designed to maximize the reading speed of the exoskeleton. It can read up to 600Hz (10 times increase from 60 Hz).
+-The data is composed of 14 angles from potentiometers, 2 analog sticks, 4 buttons from Nintendo Nunchuks, and 1 IMU.
+-All information is packed into packages of 23 bytes.
+*/
+
 #include <Wire.h>
 #include <Nunchuk.h>
 #include <I2Cdev.h>

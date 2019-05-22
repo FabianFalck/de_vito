@@ -1,15 +1,23 @@
 #!/usr/bin/env python
 
-#The Code is a part of the research 
-#"DE VITO: A Dual-arm, High Degree-of-freedom,Lightweight, Inexpensive, Passive Upper-limb Exoskeleton for Robot Teleoperation"
-#
-#This python script will create ROS node "teleoperation" that subscribes to exo_info and commands Baxter robot with the selected mode
-#These are 3 steps
-#   1. Read all exoskeleton data
-#   2. Calculate the mapped baxter robot joint angles from the given controlling mode
-#   3. Command Baxter robot with all given information
-#
-#   Please contact KawinLarppichet@gmail.com for further information.
+"""
+This code is part of the research project
+"DE VITO: A Dual-arm, High Degree-of-freedom, Lightweight, Inexpensive, Passive Upper-limb Exoskeleton for Robot Teleoperation"
+This code was written, edited and documented by:
+- Kawin Larppichet (Imperial College London, Robot Intelligence Lab)
+- Fabian Falck (Imperial College London, Robot Intelligence Lab)
+For correspondence on this project, please open an Issue on Github.
+Further details can be found at http://www.imperial.ac.uk/robot-intelligence/robots/de_vito/.
+
+
+General remarks on this script:
+This python script will create ROS node "teleoperation" that subscribes to exo_info and controls the Baxter robot with the selected mode.
+The 3 involved steps are:
+   1. Read all exoskeleton data
+   2. Calculate the mapped baxter robot joint angles from the given controlling mode
+   3. Control the Baxter robot with all given information
+"""
+
 
 import argparse
 import rospy

@@ -1,15 +1,22 @@
 #!/usr/bin/env python
 
-#The Code is a part of the research 
-#"DE VITO: A Dual-arm, High Degree-of-freedom,Lightweight, Inexpensive, Passive Upper-limb Exoskeleton for Robot Teleoperation"
-#
-#This python script will create ROS node "Exoskeleton" that is streaming all the exoskeleton data in a form of exoskeleton.msg
-#These are 3 steps
-#   1. Read the binary data from serial port (Arduino)
-#   2. Decoder all the binary data to all exoskeleton data (angles,buttons state, joystick value, IMU, ..)
-#   3. Publish the data using a exoskeleton message
-#
-#   Please contact KawinLarppichet@gmail.com for further information.
+"""
+This code is part of the research project
+"DE VITO: A Dual-arm, High Degree-of-freedom, Lightweight, Inexpensive, Passive Upper-limb Exoskeleton for Robot Teleoperation"
+This code was written, edited and documented by:
+- Kawin Larppichet (Imperial College London, Robot Intelligence Lab)
+- Fabian Falck (Imperial College London, Robot Intelligence Lab)
+For correspondence on this project, please open an Issue on Github.
+Further details can be found at http://www.imperial.ac.uk/robot-intelligence/robots/de_vito/.
+
+
+General remarks on this script:
+This python script will create ROS node "Exoskeleton" that is streaming all the exoskeleton data in a form of exoskeleton.msg.
+The 3 involved steps are:
+   1. Read the binary data from serial port (Arduino)
+   2. Decode all the binary data to all exoskeleton data (angles, button states, joystick value, IMU, ..)
+   3. Publish the data using the exoskeleton message
+"""
 
 import argparse
 import rospy

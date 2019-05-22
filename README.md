@@ -18,6 +18,7 @@ This code was written, edited and documented by:
 * Kawin Larppichet (Imperial College London, Robot Intelligence Lab)
 * Fabian Falck (Imperial College London, Robot Intelligence Lab)
 
+For correspondence on this project, please open an Issue on Github.
 
 Citation
 --------
