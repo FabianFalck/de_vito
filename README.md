@@ -3,7 +3,11 @@
 DE VITO: A Dual-arm, High Degree-of-freedom, Lightweight, Inexpensive, Passive Upper-limb Exoskeleton for Robot Teleoperation
 =============================================================================================================================
 
-This TODO stress lightweight etc.
+This repository contains the joint and Cartesian space kinematic control algorithms for DE VITO, a seven degree-of-freedom, dual-arm upper-limb exoskeleton that passively measures the pose of a human arm. DE VITO is a lightweight, simplistic and energy-efficient design with a total material cost of at least an order of magnitude less than previous work. Furthermore, we provide the a paper discussing the technical implementation, the CAD models and supplementary videos of DE VITO at http://www.imperial.ac.uk/robot-intelligence/robots/de_vito/ and below:
+
+* Paper: TODO
+* CAD models: TODO
+* Supplementary videos: TODO
 
 ![CAD model](Images/CAD_model_lowqual.jpg)
 
@@ -14,10 +18,6 @@ This code was written, edited and documented by:
 * Kawin Larppichet (Imperial College London, Robot Intelligence Lab)
 * Fabian Falck (Imperial College London, Robot Intelligence Lab)
 
-Links to all other supplementary materials of DE VITO, including the CAD models and videos, can be found at http://www.imperial.ac.uk/robot-intelligence/robots/de_vito/ . We also provide them here for reference:
-
-* Paper: TODO
-* Supplementary videos: TODO
 
 Citation
 --------
@@ -66,8 +66,6 @@ Python packages:
 Step-by-step instructions on how to teleoperate DE NIRO with DE VITO
 --------------------------------------------------------------------
 
-
-
 First, connect the exoskeleton to the Ubuntu machine via USB cable. The USB connection port can be found by executing `ls /dev` on the terminal, comparing the output before and after plugging. An exemplary output is on the image below. Typically, this will show something similar to `/dev/tty/ACM0`, depending on the order when you plug USB devices to the computer.
 
 ![USB ports](Images/usb_ports.png)
@@ -87,7 +85,7 @@ Simulation only: If you chose to run DE NIRO in simulation, you require one addi
 ![Gazebo simulation](Images/gazebo_sim_1.png)
 ![Gazebo simulation](Images/gazebo_sim_2.png)
 
-All initialization work is done now and we are good to go for starting the teleoperation node! For all following screenshots, we assume that you are currently running DE VITO in simulation. Start reading the sensor data from the exoskeleton by running `rosrun exoskeleton exoskeleton reader`.
+All initialization work is done now and we are good to go for starting the teleoperation node! For all following screenshots, we assume that you are currently running DE VITO in simulation. Start reading the sensor data from the exoskeleton by running `rosrun exoskeleton exoskeleton_reader`.
 `
 ![Exoskeleton reader kickoff](Images/exoskeleton_reader_kickoff.png)
 
@@ -99,10 +97,16 @@ If you followed the above steps correctly, your screen should successfully look 
 
 ![teleoperation success](Images/teleoperation_success.png)
 
-Changing the mode of the 
+Congratulations! Enjoy your new superhuman capabilities of teleoperating Robot DE NIRO!
 
 
-TODO
-----
-- Arduino code?
-- Gazebo simulation of DE NIRO? -> where are the files?
+Mode of kinematic control
+-------------------------
+
+As outlined in detail in the paper, we implemented two algorithms of kinematic control for DE VITO:
+
+1) joint space mapping
+2) Cartesian space (end-effector) mapping
+
+All parameters that can be adjusted and were tuned for both kinematic algorithms are in `teleoperation_baxter.py` and there explained in detail in the comments. Changing the parameter `mode` allows to switch between the two kinematic control algorithms. For joint space mapping, the main parameters are the scalar multipliers in angle mapping functions `r_exo_baxter_map_ex(angles)` and `l_exo_baxter_map(angles)` which allow separate tuning for each arm. In the cartesian mapping algorithm, we give two fixed postures that define the last degree of freedom which can be selected by changing the parameter `mode` to `2` or `3`, respectively. For details, refer to the comments in the python script.
+

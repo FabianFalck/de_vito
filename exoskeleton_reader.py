@@ -21,14 +21,20 @@ import math
 import serial
 import time
 from exoskeleton.msg import exo_info
-pi=round(math.pi,6)
+
+pi = round(math.pi,6)
 
 class exoskeleton(object):
-
+    """
+    TODOKawin
+    """
     def __init__(self):
+        """
+        TODOKawin
+        """
         self._serial = serial.Serial('/dev/ttyACM0', 2000000,timeout=1)     #make sure that Arduino code is defined with the same communication speed "baud rate = 2000000"
 
-        # initialize parameters
+        # initialize parameters TODO TODOKawin explain in comment why scalar multiplications
         self._raw_data=[0]*23
         self._filtered_angles=[0]*14
         self._debounce_button=[0]*8
@@ -40,9 +46,11 @@ class exoskeleton(object):
         self._orientation=[0]*6
 
     def _get_data(self):
-        
+        """
+        TODOKawin
+        :return:
+        """
         #Reading the data via serial port and record those data in the parameter named "raw_data"
-
         ser=self._serial
         data=self._raw_data
         while True:
@@ -50,11 +58,11 @@ class exoskeleton(object):
             if (message== 's\r\n'):
                 message=ser.read(23)
                 if len(message)==23:
+                    # TODO TODOKawin Explain in comment the operations going on
                     for i in range(14):
                         hbyte=(ord(message[14+i/4])>>(2*i%8))&3
                         lbyte=ord(message[i])
                         data[i]=lbyte+(hbyte<<8)
-
                     data[14]=(ord(message[17])>>4)&1
                     data[15]=(ord(message[17])>>5)&1
                     data[16]=(ord(message[17])>>6)&1
@@ -67,10 +75,13 @@ class exoskeleton(object):
                     break
         self._raw_data=data[:]
 
+
     def _get_angle(self):
-
+        """
+        TODOKawin
+        :return:
+        """
         #transform value of analog read (0-1023) to joint angle in (rad)
-
         equi_90deg=400.0
         set_zero=520.0
         data=self._raw_data
@@ -121,10 +132,13 @@ class exoskeleton(object):
         self._analog[:]=info[18:22]
         self._imu=info[22]
 
+
     def _rpy(self):
-
+        """
+        TODOKawin
+        :return:
+        """
         #tx=theta from exoskeleton joints
-
         tx1=self._filtered_angles[0]
         tx2=self._filtered_angles[1]
         tx3=self._filtered_angles[2]
@@ -141,7 +155,7 @@ class exoskeleton(object):
         tx13=self._filtered_angles[12]
         tx14=self._filtered_angles[13]
 
-        #right arm
+        #DH configuration right arm
         DHr=[[0 ,0    ,0     ,-tx1],
         [0      ,1.571 ,0   ,tx2],
         [0      ,1.571 ,0.37 ,tx3],
@@ -150,7 +164,8 @@ class exoskeleton(object):
         [0      ,-1.571 ,-0.07   ,tx6-pi/2],
         [0      ,-1.571 ,-0.07   ,tx7],
         [0.01    ,0     ,0   ,0]]
-        #left arm
+
+        #DH configuration left arm
         DHl=[[0 ,0    ,0     ,-tx8],
         [0      ,1.571 ,0   ,tx9],
         [0      ,1.571 ,0.37 ,tx10],
@@ -206,6 +221,11 @@ class exoskeleton(object):
 
 
     def publish_data(self):
+        """
+        TODOKawin
+        :return:
+        """
+
         msg=exo_info()
         pub = rospy.Publisher('exo_info', exo_info, queue_size=1)
         rate = rospy.Rate(1000)
@@ -227,14 +247,19 @@ class exoskeleton(object):
             rospy.loginfo(msg)
             pub.publish(msg)
             rate.sleep()
-            
+
 
 def main():
+    """
+    TODOKawin
+    :return:
+    """
 
     print("Initializing node... ")
     rospy.init_node("Exoskeleton")
     exo=exoskeleton()
     exo.publish_data()
+
 
 if __name__ == "__main__":
     main()
