@@ -6,10 +6,10 @@ DE VITO: A Dual-arm, High Degree-of-freedom, Lightweight, Inexpensive, Passive U
 This repository contains the joint and Cartesian space kinematic control algorithms for DE VITO, a seven degree-of-freedom, dual-arm upper-limb exoskeleton that passively measures the pose of a human arm. DE VITO is a lightweight, simplistic and energy-efficient design with a total material cost of at least an order of magnitude less than previous work. Furthermore, we provide the a paper discussing the technical implementation, the CAD models and supplementary videos of DE VITO at http://www.imperial.ac.uk/robot-intelligence/robots/de_vito/ and below:
 
 * Paper: TODO
-* CAD models: TODO
-* Supplementary videos: TODO
+* CAD models for 3D printing and laser cutting: https://drive.google.com/open?id=1BpmI3DLC9pfB2qu1H0x3XeXltqMBz4HW
+* Videos: TODO
 
-![CAD model](Images/CAD_model_lowqual.jpg)
+![CAD model](Images/DE_VITO_lowqual.jpg)
 
 <!-- ![CAD model with DOFs and kinematic diagram](Images/CAD_model_DOF_kinematic_diagram_lowqual.jpg) -->
 
