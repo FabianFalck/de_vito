@@ -37,11 +37,12 @@ class exoskeleton(object):
     """
     def __init__(self):
         """
-        TODOKawin
+        open serial port and set up all the required parameters
         """
         self._serial = serial.Serial('/dev/ttyACM0', 2000000,timeout=1)     #make sure that Arduino code is defined with the same communication speed "baud rate = 2000000"
 
-        # initialize parameters TODO TODOKawin explain in comment why scalar multiplications
+        # initialize parameters TODO TODOKawin explain in comment why scalar multiplications // TBH I can't remember the reasons of doing this just wanna create lists of each parameters 
+        # EX. raw_data with 23 of "0" value.    you can replace to any method of creating list containing X number of 0
         self._raw_data=[0]*23
         self._filtered_angles=[0]*14
         self._debounce_button=[0]*8
@@ -54,30 +55,35 @@ class exoskeleton(object):
 
     def _get_data(self):
         """
-        TODOKawin
-        :return:
+        acquire the binary data from the connected serial port and decode the data into readable data
+        :return: (list({int})) - 23 raw exoskeleton values
         """
-        #Reading the data via serial port and record those data in the parameter named "raw_data"
+        #Read the data via serial port and record those data in the parameter named "raw_data"
         ser=self._serial
         data=self._raw_data
         while True:
             message=ser.read(3)
+            #compare the first 3 bytes from the streaming data to allocate the first data to be read
             if (message== 's\r\n'):
                 message=ser.read(23)
                 if len(message)==23:
-                    # TODO TODOKawin Explain in comment the operations going on
+                    # decode the first 18 bytes of data into 14 analog read signals
                     for i in range(14):
                         hbyte=(ord(message[14+i/4])>>(2*i%8))&3
                         lbyte=ord(message[i])
                         data[i]=lbyte+(hbyte<<8)
+
+                    # decode the Nunchuk switch states
                     data[14]=(ord(message[17])>>4)&1
                     data[15]=(ord(message[17])>>5)&1
                     data[16]=(ord(message[17])>>6)&1
                     data[17]=(ord(message[17])>>7)&1
+                    # decode the joy stick of both nunchuks
                     data[18]=ord(message[18])-128
                     data[19]=ord(message[19])-128
                     data[20]=ord(message[20])-128
                     data[21]=ord(message[21])-128
+                    # decode IMU yaw angle
                     data[22]=ord(message[22])-128 
                     break
         self._raw_data=data[:]
@@ -85,8 +91,8 @@ class exoskeleton(object):
 
     def _get_angle(self):
         """
-        TODOKawin
-        :return:
+        transform values of analog reads to joint angles with the filter  
+        :return: -
         """
         #transform value of analog read (0-1023) to joint angle in (rad)
         equi_90deg=400.0
@@ -142,8 +148,8 @@ class exoskeleton(object):
 
     def _rpy(self):
         """
-        TODOKawin
-        :return:
+        calculate the r p y angles of both hands and also the end effector positions
+        :return: -
         """
         #tx=theta from exoskeleton joints
         tx1=self._filtered_angles[0]
@@ -229,8 +235,8 @@ class exoskeleton(object):
 
     def publish_data(self):
         """
-        TODOKawin
-        :return:
+        Publish the exoskeleton data via topic "exo_info" by the ROS message "exoskeleton.msg"
+        :return: -
         """
 
         msg=exo_info()
@@ -258,8 +264,8 @@ class exoskeleton(object):
 
 def main():
     """
-    TODOKawin
-    :return:
+    Initializes node "Exoskeleton" and publishes the data via a topic "exo_info"
+    :return: - 
     """
 
     print("Initializing node... ")

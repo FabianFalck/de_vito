@@ -58,7 +58,7 @@ elif mode ==2:
         r_last_command_baxter_angles=[ 0.3, -0.9, 0.8, 1.2 , -0.6, 1.2,0]
         l_last_command_baxter_angles=[-0.4, -0.9, -0.8, 1.2 , 0.6, 1.2,0]
 
-# TODO TODOKawin explain in comment
+# Set up the range of motion of each Exoskeleton joints   [minimum angle, maximum angle, sign]
 rl_min_max=[[-30,75,1]
           ,[0,90,1]
           ,[-110,45,0]
@@ -74,7 +74,7 @@ rl_min_max=[[-30,75,1]
           ,[-40,27,0]
           ,[-90,20,0]]
 
-# TODO TODOKawin explain in comment
+# Set up the range of motion of each Baxter robot joints   [minimum angle, maximum angle]
 baxter_min_max=[[-97,97]
                ,[-123,60]
                ,[-174,174]
@@ -93,12 +93,12 @@ baxter_min_max=[[-97,97]
 
 def set_j(limb, joint_name, angle):
     """
-    TODOKawin
+    Commands the joints of this limb to the specified positions by using pure mapped exoskeleton angles
 
-    :param limb: TODOKawin
-    :param joint_name: TODOKawin
-    :param angle: TODOKawin
-    :return:
+    :param limb: (str:Limb) Interface class for a limb on the Baxter robot
+    :param joint_name: (dict({str})) - joint_name
+    :param angle: (list({float})) - angle command
+    :return: -
     """
     joint_command = dict(zip(joint_name,angle))
     limb.set_joint_positions(joint_command)
@@ -106,17 +106,17 @@ def set_j(limb, joint_name, angle):
 
 def set_pose(limb,kin,jointname,end_point,rpy,elbow,rl,mode):
     """
-    TODOKawin
+    Commands the joints of this limb to the specified positions by using the end effector pose and elbow angle
 
-    :param limb: TODOKawin
-    :param kin: TODOKawin
-    :param jointname: TODOKawin
-    :param end_point: TODOKawin
-    :param rpy: TODOKawin
-    :param elbow: TODOKawin
-    :param rl: TODOKawin
-    :param mode: TODOKawin
-    :return:
+    :param limb: (str:Limb) Interface class for a limb on the Baxter robot
+    :param kin: (str:Limb) baxter kinematics class
+    :param jointname: (dict({str})) - joint_name
+    :param end_point: (list({float})) - end effector positions
+    :param rpy: (list({float})) - orientations
+    :param elbow: float - elbow joint angles
+    :param rl: int - specifiy either left or right limb to be controlled ( 0 = right, 1 = left )
+    :param mode: int - mapping algorithm mode 
+    :return: -
     """
     global r_last_command_baxter_angles
     global l_last_command_baxter_angles
@@ -170,7 +170,7 @@ def set_pose(limb,kin,jointname,end_point,rpy,elbow,rl,mode):
             if rl==0:
                     quat = quaternion_from_euler (rpy[0]-pi,-rpy[1],-rpy[2]+pi,axes='rzyx')   #right
             else:
-                    quat = quaternion_from_euler (rpy[0]-pi,-rpy[1],-rpy[2]-pi,axes='rzyx')         #left
+                    quat = quaternion_from_euler (rpy[0]-pi,-rpy[1],-rpy[2]-pi,axes='rzyx')   #left
             current_pose=limb.endpoint_pose()
             position=current_pose['position']
             orientation=current_pose['orientation']
@@ -222,18 +222,18 @@ def set_pose(limb,kin,jointname,end_point,rpy,elbow,rl,mode):
 
 def move_catesian(limb_r,limb_l,kin_r,kin_l,jointname_r,jointname_l,dx,dy,dz):
     """
-    TODOKawin
+    Incrementally move the Baxter end effectors in X Y Z direction controlled by the joy stick of Nunchuk controller
 
-    :param limb_r: TODOKawin
-    :param limb_l: TODOKawin
-    :param kin_r: TODOKawin
-    :param kin_l: TODOKawin
-    :param jointname_r: TODOKawin
-    :param jointname_l: TODOKawin
-    :param dx: TODOKawin
-    :param dy: TODOKawin
-    :param dz: TODOKawin
-    :return:
+    :param limb_r: (str:Limb) Interface class for a limb on the Baxter robot
+    :param limb_l: (str:Limb) Interface class for a limb on the Baxter robot
+    :param kin_r: (str:Limb) baxter kinematics class
+    :param kin_l: (str:Limb) baxter kinematics class
+    :param jointname_r: (dict({str})) - joint_name
+    :param jointname_l: (dict({str})) - joint_name
+    :param dx: float - displacement in x axis
+    :param dy: float - displacement in y axis
+    :param dz: float - displacement in z axis
+    :return: -
     """
     global r_last_command_baxter_angles
     global l_last_command_baxter_angles
@@ -301,10 +301,10 @@ def move_catesian(limb_r,limb_l,kin_r,kin_l,jointname_r,jointname_l,dx,dy,dz):
 
 def r_exo_baxter_map(angles):
     """
-    TODOKawin
+    Maps the joint positions of the right arm of exoskeleton to Baxter arm joint positions with a one to one mapping
 
-    :param angles: TODOKawin
-    :return: TODOKawin
+    :param angles: (list({float})) - Exoskeleton angles
+    :return: (list({float})) - Baxter angles
     """
     #one to one mapping
     mapped_angles=np.zeros((7))
@@ -321,10 +321,10 @@ def r_exo_baxter_map(angles):
 
 def r_exo_baxter_map_ex(angles):
     """
-    TODOKawin
+    Maps the joint positions of the right arm of exoskeleton to Baxter arm joint positions with the Scaling factor mapping
 
-    :param angles: TODOKawin
-    :return:
+    :param angles: (list({float})) - Exoskeleton angles
+    :return: (list({float})) - Baxter angles
     """
         
     #the scaling factor can be modified by changing the multiplying number on each individual angle
@@ -342,10 +342,10 @@ def r_exo_baxter_map_ex(angles):
 
 def l_exo_baxter_map(angles):
     """
-    TODOKawin
+    Maps the joint positions of the left arm of exoskeleton to Baxter arm joint positions with a one to one mapping
 
-    :param angles: TODOKawin
-    :return: TODOKawin
+    :param angles: (list({float})) - Exoskeleton angles
+    :return: (list({float})) - Baxter angles
     """
     #one to one mapping
     mapped_angles=np.zeros((7))
@@ -362,10 +362,10 @@ def l_exo_baxter_map(angles):
 
 def l_exo_baxter_map_ex(angles):
     """
-    TODOKawin
+    Maps the joint positions of the left arm of exoskeleton to Baxter arm joint positions with the Scaling factor mapping
 
-    :param angles: TODOKawin
-    :return: TODOKawin
+    :param angles: (list({float})) - Exoskeleton angles
+    :return: (list({float})) - Baxter angles
     """
     #the scaling factor can be modified by changing the multiplying number on each individual angle
     mapped_angles=np.zeros((7))
@@ -382,11 +382,11 @@ def l_exo_baxter_map_ex(angles):
 
 def threshold(a,b):
     """
-    TODOKawin
+    Thresholding a value of a by the absolute value of b
 
-    :param a: TODOKawin
-    :param b: TODOKawin
-    :return: TODOKawin
+    :param a: float - value to be compared
+    :param b: float - value to be cut off
+    :return: thresholded value of a by an absolute value of b
     """
 
     if b<0:
@@ -398,16 +398,15 @@ def threshold(a,b):
 
 def get_state(data,limb_r,limb_l,des_baxter_state,act_baxter_state):
     """
-    TODOKawin
+    Getting all mapped angles from given exoskeleton message
 
-    :param data: TODOKawin
-    :param limb_r: TODOKawin
-    :param limb_l: TODOKawin
-    :param des_baxter_state: TODOKawin
-    :param act_baxter_state: TODOKawin
-    :return: TODOKawin
+    :param data: exoskeleton message
+    :param limb_r: (str:Limb) Interface class for a limb on the Baxter robot
+    :param limb_l: (str:Limb) Interface class for a limb on the Baxter robot
+    :param des_baxter_state: (list({float})) - mapped exoskeleton angles
+    :param act_baxter_state: (list({float})) - Baxter angles
+    :return: (list({float})) - mapped exoskeleton angles + (list({float})) - Baxter angles
     """
-    past_des=des_baxter_state.copy() #copy previous desired state
 
     #postural mapping
     ##
@@ -440,17 +439,17 @@ def get_state(data,limb_r,limb_l,des_baxter_state,act_baxter_state):
 
 def listener():  # TODO function in function?
     """
-    TODOKawin
+    Subscribes to topic exo_info
 
-    :return:
+    :return: -
     """
 
     def map_exo(data):
         """
-        TODOKawin
+        Teleoperatates the Baxter robot
 
-        :param data: TODOKawin
-        :return: TODOKawin
+        :param data: exo_info message
+        :return: -
         """
 
         global r_last_command_baxter_angles
