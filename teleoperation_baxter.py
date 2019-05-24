@@ -58,7 +58,7 @@ elif mode ==2:
         r_last_command_baxter_angles=[ 0.3, -0.9, 0.8, 1.2 , -0.6, 1.2,0]
         l_last_command_baxter_angles=[-0.4, -0.9, -0.8, 1.2 , 0.6, 1.2,0]
 
-# Set up the range of motion of each Exoskeleton joints   [minimum angle, maximum angle, sign]
+# Set up the range of motion of each Exoskeleton joints [minimum angle, maximum angle, sign]
 rl_min_max=[[-30,75,1]
           ,[0,90,1]
           ,[-110,45,0]
@@ -74,7 +74,7 @@ rl_min_max=[[-30,75,1]
           ,[-40,27,0]
           ,[-90,20,0]]
 
-# Set up the range of motion of each Baxter robot joints   [minimum angle, maximum angle]
+# Set up the range of motion of each Baxter robot joints [minimum angle, maximum angle]
 baxter_min_max=[[-97,97]
                ,[-123,60]
                ,[-174,174]
@@ -93,7 +93,7 @@ baxter_min_max=[[-97,97]
 
 def set_j(limb, joint_name, angle):
     """
-    Commands the joints of this limb to the specified positions by using pure mapped exoskeleton angles
+    Controls the joints of this limb to the specified positions by using the raw exoskeleton angles.
 
     :param limb: (str:Limb) Interface class for a limb on the Baxter robot
     :param joint_name: (dict({str})) - joint_name
@@ -104,9 +104,9 @@ def set_j(limb, joint_name, angle):
     limb.set_joint_positions(joint_command)
 
 
-def set_pose(limb,kin,jointname,end_point,rpy,elbow,rl,mode):
+def set_pose(limb, kin, jointname, end_point, rpy,elbow, rl,mode):
     """
-    Commands the joints of this limb to the specified positions by using the end effector pose and elbow angle
+    Controls the joints of this limb to the specified positions by using the end effector pose and elbow angle.
 
     :param limb: (str:Limb) Interface class for a limb on the Baxter robot
     :param kin: (str:Limb) baxter kinematics class
@@ -220,9 +220,9 @@ def set_pose(limb,kin,jointname,end_point,rpy,elbow,rl,mode):
                             l_last_command_baxter_angles[:]=filtered_angles_l[:]
 
 
-def move_catesian(limb_r,limb_l,kin_r,kin_l,jointname_r,jointname_l,dx,dy,dz):
+def move_catesian(limb_r, limb_l, kin_r, kin_l, jointname_r, jointname_l, dx, dy, dz):
     """
-    Incrementally move the Baxter end effectors in X Y Z direction controlled by the joy stick of Nunchuk controller
+    Incrementally move the Baxter end effectors in X Y Z direction controlled by the joy stick of the Nunchuk controller.
 
     :param limb_r: (str:Limb) Interface class for a limb on the Baxter robot
     :param limb_l: (str:Limb) Interface class for a limb on the Baxter robot
@@ -301,7 +301,7 @@ def move_catesian(limb_r,limb_l,kin_r,kin_l,jointname_r,jointname_l,dx,dy,dz):
 
 def r_exo_baxter_map(angles):
     """
-    Maps the joint positions of the right arm of exoskeleton to Baxter arm joint positions with a one to one mapping
+    Maps the joint positions of the right arm of exoskeleton to the Baxter arm joint positions with a one-to-one mapping.
 
     :param angles: (list({float})) - Exoskeleton angles
     :return: (list({float})) - Baxter angles
@@ -321,7 +321,7 @@ def r_exo_baxter_map(angles):
 
 def r_exo_baxter_map_ex(angles):
     """
-    Maps the joint positions of the right arm of exoskeleton to Baxter arm joint positions with the Scaling factor mapping
+    Maps the joint positions of the right arm of the exoskeleton to Baxter arm joint positions with scaling factor mapping.
 
     :param angles: (list({float})) - Exoskeleton angles
     :return: (list({float})) - Baxter angles
@@ -342,7 +342,7 @@ def r_exo_baxter_map_ex(angles):
 
 def l_exo_baxter_map(angles):
     """
-    Maps the joint positions of the left arm of exoskeleton to Baxter arm joint positions with a one to one mapping
+    Maps the joint positions of the left arm of exoskeleton to Baxter arm joint positions with a one-to-one mapping.
 
     :param angles: (list({float})) - Exoskeleton angles
     :return: (list({float})) - Baxter angles
@@ -362,7 +362,7 @@ def l_exo_baxter_map(angles):
 
 def l_exo_baxter_map_ex(angles):
     """
-    Maps the joint positions of the left arm of exoskeleton to Baxter arm joint positions with the Scaling factor mapping
+    Maps the joint positions of the left arm of exoskeleton to Baxter arm joint positions with scaling factor mapping.
 
     :param angles: (list({float})) - Exoskeleton angles
     :return: (list({float})) - Baxter angles
@@ -380,7 +380,7 @@ def l_exo_baxter_map_ex(angles):
     return mapped_angles
 
 
-def threshold(a,b):
+def threshold(a, b):
     """
     Thresholding a value of a by the absolute value of b
 
@@ -396,7 +396,7 @@ def threshold(a,b):
     return a
 
 
-def get_state(data,limb_r,limb_l,des_baxter_state,act_baxter_state):
+def get_state(data, limb_r, limb_l, des_baxter_state, act_baxter_state):
     """
     Getting all mapped angles from given exoskeleton message
 
@@ -437,16 +437,16 @@ def get_state(data,limb_r,limb_l,des_baxter_state,act_baxter_state):
     return des_baxter_state,act_baxter_state
 
 
-def listener():  # TODO function in function?
+def listener():
     """
-    Subscribes to topic exo_info
+    Subscribes to topic "exo_info".
 
     :return: -
     """
 
     def map_exo(data):
         """
-        Teleoperatates the Baxter robot
+        Teleoperatates the Baxter robot.
 
         :param data: exo_info message
         :return: -
@@ -543,7 +543,7 @@ def listener():  # TODO function in function?
         control_sig.data = [speed, direction, 0]
         sig.data = [float(speed), float(direction)]
 
-        ##########Uncomment these 3 lines to enable the IMU control
+        ########## Uncomment these 3 lines to enable the IMU control
         #pub_data.publish(twist)
         #pub_resq.publish(control_sig)
         #pub_base.publish(sig)

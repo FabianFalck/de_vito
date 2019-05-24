@@ -32,17 +32,14 @@ from exoskeleton.msg import exo_info
 pi = round(math.pi,6)
 
 class exoskeleton(object):
-    """
-    TODOKawin
-    """
+
     def __init__(self):
         """
-        open serial port and set up all the required parameters
+        Open serial port and set up all required parameters.
         """
         self._serial = serial.Serial('/dev/ttyACM0', 2000000,timeout=1)     #make sure that Arduino code is defined with the same communication speed "baud rate = 2000000"
 
-        # initialize parameters TODO TODOKawin explain in comment why scalar multiplications // TBH I can't remember the reasons of doing this just wanna create lists of each parameters 
-        # EX. raw_data with 23 of "0" value.    you can replace to any method of creating list containing X number of 0
+        # initialize parameters
         self._raw_data=[0]*23
         self._filtered_angles=[0]*14
         self._debounce_button=[0]*8
@@ -55,7 +52,7 @@ class exoskeleton(object):
 
     def _get_data(self):
         """
-        acquire the binary data from the connected serial port and decode the data into readable data
+        Acquire the binary data from the connected serial port and decode the data into readable data.
         :return: (list({int})) - 23 raw exoskeleton values
         """
         #Read the data via serial port and record those data in the parameter named "raw_data"
@@ -91,7 +88,7 @@ class exoskeleton(object):
 
     def _get_angle(self):
         """
-        transform values of analog reads to joint angles with the filter  
+        Transform values of analog reads to joint angles with the filter.
         :return: -
         """
         #transform value of analog read (0-1023) to joint angle in (rad)
@@ -148,7 +145,7 @@ class exoskeleton(object):
 
     def _rpy(self):
         """
-        calculate the r p y angles of both hands and also the end effector positions
+        Calculate the r p y angles of both hands and the end effector positions.
         :return: -
         """
         #tx=theta from exoskeleton joints
@@ -235,7 +232,7 @@ class exoskeleton(object):
 
     def publish_data(self):
         """
-        Publish the exoskeleton data via topic "exo_info" by the ROS message "exoskeleton.msg"
+        Publish the exoskeleton data via topic "exo_info" with the ROS message "exoskeleton.msg".
         :return: -
         """
 
@@ -264,7 +261,7 @@ class exoskeleton(object):
 
 def main():
     """
-    Initializes node "Exoskeleton" and publishes the data via a topic "exo_info"
+    Initializes node "Exoskeleton" and publishes the data via a topic "exo_info".
     :return: - 
     """
 
