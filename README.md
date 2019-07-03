@@ -23,7 +23,15 @@ For correspondence on this project, please open an Issue on Github.
 Citation
 --------
 
-TODO
+If you would like to cite this work, please use the following bibtex reference: 
+
+@inproceedings{falck2019taros,
+  title={{DE VITO: A Dual-arm, High Degree-of-freedom, Lightweight, Inexpensive, Passive Upper-limb Exoskeleton for Robot Teleoperation}},
+  author={Falck, Fabian and Larppichet, Kawin and Kormushev, Petar},
+  booktitle={Proc. 20th International Conference Towards Autonomous Robotic Systems (TAROS 2019)},
+  year={2019},
+  month={July},
+}
 
 Overview
 --------
