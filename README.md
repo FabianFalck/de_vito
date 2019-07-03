@@ -31,6 +31,7 @@ If you would like to cite this work, please use the following bibtex reference:
   booktitle={Proc. 20th International Conference Towards Autonomous Robotic Systems (TAROS 2019)},  
   year={2019},  
   month={July},  
+  pages={78--89},
 }
 
 Overview
